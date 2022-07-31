@@ -1,19 +1,22 @@
 module.exports = (sequelize , DataTypes) => {
-    const Product = sequelize.define("product", {
+    const HeroSection = sequelize.define("heroSection", {
         title: {
             type: DataTypes.STRING,
             allowNull: false
         },
-        price: {
-            type: DataTypes.INTEGER
+        desc: {
+            type: DataTypes.TEXT,
+            allowNull: false
         },
-        description: {
-            type: DataTypes.TEXT
+        image: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
         },
-        published: {
+        active: {
             type: DataTypes.BOOLEAN
         }
     })
 
-    return Product;
+    return HeroSection;
 }
