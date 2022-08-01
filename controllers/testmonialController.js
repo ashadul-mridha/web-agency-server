@@ -1,13 +1,13 @@
 const db = require('../models');
 const path = require("path");
 const fs = require("fs");
-const uploadFolder = path.join( __dirname , '/../public/images/uploads/herosection');
+const uploadFolder = path.join( __dirname , '/../public/images/uploads/testmonial');
 
 //Import model
-const HeroSection = db.heroSections;
+const Testmonial = db.testmonial;
 
 //const add new hero section data
-const addHeroSection = async (req,res) => {
+const addTestmonaial = async (req,res) => {
     try {
 
       let finalFileName;
@@ -43,14 +43,16 @@ const addHeroSection = async (req,res) => {
       }
 
         let data = {
-            title: req.body.title,
-            desc:req.body.desc,
+            username: req.body.username,
+            title:req.body.title,
+            feedback:req.body.feedback,
+            rating:req.body.rating,
             image: finalFileName,
             active: req.body.active ? req.body.active : false
         }
 
 
-        const newData = await HeroSection.create(data);
+        const newData = await Testmonial.create(data);
         res.send({
           status: true,
           message: "Data Added Successfull",
@@ -69,9 +71,9 @@ const addHeroSection = async (req,res) => {
 }
 
 //get all data
-const getHeroSectionData = async (req, res) => {
+const getAllData = async (req, res) => {
     try {
-        const data = await HeroSection.findAll({});
+        const data = await Testmonial.findAll({});
         
         res.send({
           status: true,
@@ -91,10 +93,10 @@ const getHeroSectionData = async (req, res) => {
 }
 
 //get single data
-const getHeroSectionDataByID = async (req,res) => {
+const getDataByID = async (req,res) => {
     try {
         const {id} = req.params;
-        const data = await HeroSection.findOne({ where : {id: id}})
+        const data = await Testmonial.findOne({ where : {id: id}})
         res.send({
           status: true,
           message: "Data Get Successfull",
@@ -113,12 +115,12 @@ const getHeroSectionDataByID = async (req,res) => {
 
 
 //Update single data by using id
-const updateOneHeroSection = async (req,res) => {
+const updateDataByID = async (req,res) => {
     try {
+        //update id
         const {id} = req.params;
-        
 
-        const storedData = await HeroSection.findOne({ where : {id: id}})
+        const storedData = await Testmonial.findOne({ where : {id: id}})
         let finalFileName = storedData.image;
 
         //delete and store new image
@@ -166,7 +168,8 @@ const updateOneHeroSection = async (req,res) => {
         const uploadData = { ...req.body , image : finalFileName}
 
 
-        const data = await HeroSection.update( uploadData , { where : {id: id}})
+        //update data
+        const data = await Testmonial.update( uploadData , { where : {id: id}})
         
         res.send({
           status: true,
@@ -186,10 +189,10 @@ const updateOneHeroSection = async (req,res) => {
 }
 
 //delete single data by using id
-const deleteData = async (req,res) => {
+const deleteDataById = async (req,res) => {
     try {
         const {id} = req.params;
-        const data = await HeroSection.findOne({ where : {id: id}})
+        const data = await Testmonial.findOne({ where : {id: id}})
         if(data.image){
             fs.unlink(`${uploadFolder}/${data.image}`, (err) => {
               if(err){
@@ -199,8 +202,8 @@ const deleteData = async (req,res) => {
               }
             })
         }
-        await HeroSection.destroy({ where : {id: id}})
-        res.status(200).send('Product Delete Successfully');
+        await Testmonial.destroy({ where : {id: id}})
+        res.status(200).send('Testmonial Delete Successfully');
     } catch (error) {
         res.send({
           status: false,
@@ -212,9 +215,9 @@ const deleteData = async (req,res) => {
 }
 
 module.exports = {
-    addHeroSection,
-    getHeroSectionData,
-    getHeroSectionDataByID,
-    updateOneHeroSection,
-    deleteData
+    addTestmonaial,
+    getAllData,
+    getDataByID,
+    updateDataByID,
+    deleteDataById
 }

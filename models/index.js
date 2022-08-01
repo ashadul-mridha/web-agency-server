@@ -31,6 +31,7 @@ db.sequelize = sequelize;
 
 //db object model
 db.heroSections = require('./heroSectionModel')(sequelize, DataTypes);
+db.testmonial = require('./testmonialModel')(sequelize, DataTypes);
 
 //database with model and create table
 db.sequelize.sync({force: false})
