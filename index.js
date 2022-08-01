@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
+const fileUpload = require('express-fileupload');
 
 // import router
 const heroSectionRouter = require('./routers/heroSectionRouter');
@@ -12,9 +14,13 @@ const app = express();
 //data parse
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload());
 
 //application middleware
 app.use(cors());
+
+//set static folder
+app.use(express.static(path.join(__dirname, "public")));
 
 
 //all router

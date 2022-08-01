@@ -1,4 +1,5 @@
 const db = require('../models');
+const path = require("path");
 
 //Import model
 const HeroSection = db.heroSections;
@@ -7,12 +8,47 @@ const HeroSection = db.heroSections;
 const addHeroSection = async (req,res) => {
     try {
 
+      const uploadFolder = path.join( __dirname , '/../public/images/uploads/herosection');
+
+      let finalFileName;
+
+      if (req.files) {
+
+          //get files
+          const imageFile = req.files.image;
+          const UploadedFilName = imageFile.name;
+
+          const fileExt = path.extname(UploadedFilName);
+          const fileNameWithoutExt =
+            UploadedFilName
+              .replace(fileExt, "")
+              .toLowerCase()
+              .split(" ")
+              .join("-") +
+            "-" +
+            Date.now();
+
+          finalFileName = fileNameWithoutExt + fileExt;
+
+          const uploadPath = `${uploadFolder}/${finalFileName}`;
+
+          console.log(uploadPath);
+
+          imageFile.mv( uploadPath , (err) => {
+            if (err) {
+              throw Error('File Not Uploaded')
+            }
+          })
+
+      }
+
         let data = {
             title: req.body.title,
             desc:req.body.desc,
-            image: req.body.image,
+            image: finalFileName,
             active: req.body.active ? req.body.active : false
         }
+
 
         const newData = await HeroSection.create(data);
         res.send({

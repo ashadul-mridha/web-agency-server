@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 //import all controller 
 
-const{ 
+const{
         addHeroSection,
         getHeroSectionData, 
         getHeroSectionDataByID, 
