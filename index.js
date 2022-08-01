@@ -8,6 +8,7 @@ const heroSectionRouter = require('./routers/heroSectionRouter');
 const testmonialRouter = require('./routers/testmonialRouter');
 const aboutusRouter = require('./routers/aboutusRouter');
 const serviceRouter = require('./routers/serviceRouter');
+const projectRouter = require('./routers/projectRouter');
 
 //import middleware
 const { notFoundhandler,  defaultErrorHandler } = require('./middlewares/common/errorHandler');
@@ -31,6 +32,7 @@ app.use('/api/heroSection' , heroSectionRouter);
 app.use('/api/testmonial' , testmonialRouter);
 app.use('/api/aboutus' , aboutusRouter);
 app.use('/api/service' , serviceRouter);
+app.use('/api/project' , projectRouter);
 
 //testing api
 app.get('/' , (req , res) => {
