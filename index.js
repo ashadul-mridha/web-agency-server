@@ -7,6 +7,7 @@ const fileUpload = require('express-fileupload');
 const heroSectionRouter = require('./routers/heroSectionRouter');
 const testmonialRouter = require('./routers/testmonialRouter');
 const aboutusRouter = require('./routers/aboutusRouter');
+const serviceRouter = require('./routers/serviceRouter');
 
 //import middleware
 const { notFoundhandler,  defaultErrorHandler } = require('./middlewares/common/errorHandler');
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use('/api/heroSection' , heroSectionRouter);
 app.use('/api/testmonial' , testmonialRouter);
 app.use('/api/aboutus' , aboutusRouter);
+app.use('/api/service' , serviceRouter);
 
 //testing api
 app.get('/' , (req , res) => {
