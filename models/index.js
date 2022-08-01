@@ -35,6 +35,7 @@ db.testmonial = require('./testmonialModel')(sequelize, DataTypes);
 db.aboutus = require('./aboutusModel')(sequelize, DataTypes);
 db.service = require('./serviceModel')(sequelize, DataTypes);
 db.project = require('./projectModel')(sequelize, DataTypes);
+db.setting = require('./settingModel')(sequelize, DataTypes);
 
 //database with model and create table
 db.sequelize.sync({force: false})

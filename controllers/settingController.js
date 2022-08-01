@@ -1,13 +1,13 @@
 const db = require('../models');
 const path = require("path");
 const fs = require("fs");
-const uploadFolder = path.join( __dirname , '/../public/images/uploads/project');
+const uploadFolder = path.join( __dirname , '/../public/images/uploads/setting');
 
 //Import model
-const Project = db.project;
+const Setting = db.setting;
 
 //const add new hero section data
-const addProject = async (req,res) => {
+const addSetting = async (req,res) => {
     try {
 
       let finalFileName;
@@ -43,21 +43,18 @@ const addProject = async (req,res) => {
       }
 
         let data = {
-            title:req.body.title,
-            subTitle:req.body.subTitle,
-            desc:req.body.desc,
-            ProductFeature: req.body.ProductFeature,
+            ...req.body,
             image: finalFileName,
             active: req.body.active ? req.body.active : false
         }
 
         //inset about us data
-        const projectData = await Project.create(data);
+        const settingData = await Setting.create(data);
 
         res.send({
           status: true,
           message: "Data Added Successfull",
-          data : projectData,
+          data : settingData,
           statusCode: 200
         })
 
@@ -74,7 +71,7 @@ const addProject = async (req,res) => {
 //get all data
 const getAllData = async (req, res) => {
     try {
-        const data = await Project.findAll({});
+        const data = await Setting.findAll({});
         
         res.send({
           status: true,
@@ -97,7 +94,7 @@ const getAllData = async (req, res) => {
 const getDataByID = async (req,res) => {
     try {
         const {id} = req.params;
-        const data = await Project.findOne({ where : {id: id}})
+        const data = await Setting.findOne({ where : {id: id}})
         res.send({
           status: true,
           message: "Data Get Successfull",
@@ -121,7 +118,7 @@ const updateDataByID = async (req,res) => {
         //update id
         const {id} = req.params;
 
-        const storedData = await Project.findOne({ where : {id: id}})
+        const storedData = await Setting.findOne({ where : {id: id}})
         let finalFileName = storedData.image;
 
         //delete and store new image
@@ -170,7 +167,7 @@ const updateDataByID = async (req,res) => {
 
 
         //update data
-        const data = await Project.update( uploadData , { where : {id: id}})
+        const data = await Setting.update( uploadData , { where : {id: id}})
         
         res.send({
           status: true,
@@ -193,7 +190,7 @@ const updateDataByID = async (req,res) => {
 const deleteDataById = async (req,res) => {
     try {
         const {id} = req.params;
-        const data = await Project.findOne({ where : {id: id}})
+        const data = await Setting.findOne({ where : {id: id}})
         if(data.image){
             fs.unlink(`${uploadFolder}/${data.image}`, (err) => {
               if(err){
@@ -203,7 +200,7 @@ const deleteDataById = async (req,res) => {
               }
             })
         }
-        await Project.destroy({ where : {id: id}})
+        await Setting.destroy({ where : {id: id}})
         res.status(200).send('About Us Delete Successfully');
     } catch (error) {
         res.send({
@@ -216,7 +213,7 @@ const deleteDataById = async (req,res) => {
 }
 
 module.exports = {
-    addProject,
+    addSetting,
     getAllData,
     getDataByID,
     updateDataByID,
