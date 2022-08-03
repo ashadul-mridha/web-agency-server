@@ -18,23 +18,27 @@ const checkLogin = async (req, res, next) => {
             const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
             // Get user from the token and set it user
-            req.user = await User.findOne({ where : {id: decoded.userid}})
+            req.user = await User.findOne({ where : {id: decoded.userid} ,
+                attributes: {
+                    exclude: ["password","isDeleted","active"]
+                }
+            })
 
             next()
         } else {
-            res.send({
+            res.status(401).send({
                 status: false,
                 message: "Not Authorize",
                 data : null,
-                statusCode: 500
+                statusCode: 401
             })
         }
     } catch (error) {
-        res.send({
+        res.status(401).send({
             status: false,
             message: "Not Authorize",
             data : null,
-            statusCode: 500
+            statusCode: 401
         })
     }
 

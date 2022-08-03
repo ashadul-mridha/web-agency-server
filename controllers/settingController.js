@@ -72,6 +72,8 @@ const addSetting = async (req,res) => {
 const getAllData = async (req, res) => {
     try {
         const data = await Setting.findAll({});
+
+        console.log(req.user);
         
         res.send({
           status: true,

@@ -99,7 +99,7 @@ const registrationUser = async (req,res) => {
 
   try {
     // find a user who has this email/username
-    const user = await User.findOne({ where : {email: req.body.email}})
+    const user = await User.findOne({ where : {email: req.body.email , active : true}})
 
     if (user && user.id) {
 
