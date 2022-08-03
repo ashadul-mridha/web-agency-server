@@ -20,7 +20,7 @@ sequelize.authenticate()
     console.log('Connection has been established successfully.');
 })
 .catch(err => {
-    console.log('Unable to connect to the database:', error);
+    console.log('Unable to connect to the database:', err.message);
     // console.log('oh no');
 })
 
@@ -30,6 +30,7 @@ db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
 //db object model
+db.user = require('./userModel')(sequelize, DataTypes);
 db.heroSections = require('./heroSectionModel')(sequelize, DataTypes);
 db.testmonial = require('./testmonialModel')(sequelize, DataTypes);
 db.aboutus = require('./aboutusModel')(sequelize, DataTypes);

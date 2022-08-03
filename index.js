@@ -1,9 +1,11 @@
 const express = require('express');
 const cors = require('cors');
+const dotenv = require('dotenv').config();
 const path = require('path');
 const fileUpload = require('express-fileupload');
 
 // import router
+const userRouter = require('./routers/userRouter');
 const heroSectionRouter = require('./routers/heroSectionRouter');
 const testmonialRouter = require('./routers/testmonialRouter');
 const aboutusRouter = require('./routers/aboutusRouter');
@@ -29,6 +31,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 
 //all router
+app.use('/api/user' , userRouter);
 app.use('/api/heroSection' , heroSectionRouter);
 app.use('/api/testmonial' , testmonialRouter);
 app.use('/api/aboutus' , aboutusRouter);

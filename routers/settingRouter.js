@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const { checkLogin } = require('../middlewares/common/checkAuthorization');
 
 //import all controller 
 
@@ -13,7 +14,7 @@ const{
 // add new data
 router.post('/' , addSetting)
 //get all data
-router.get('/' , getAllData)
+router.get('/', checkLogin , getAllData)
 //get single data 
 router.get('/:id' , getDataByID)
 //update single data 
